@@ -3,4 +3,17 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Main Activity -->
+    <string name="audio_book">Audio Book</string>
+    <string name="books">Books</string>
+    <string name="ios_apps">iOS Apps</string>
+    <string name="mac_apps">Mac Apps</string>
+    <string name="movies">Movies</string>
+    <string name="itunes_u">iTunes U</string>
+    <string name="music_video">Music Video</string>
+    <string name="pod_cast">Pod Cast</string>
+    <string name="tv_shows">TV Shows</string>
+    <string name="title_activity_media_list">MediaListActivity</string>
+
 </resources>
