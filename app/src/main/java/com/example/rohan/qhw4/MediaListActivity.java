@@ -2,6 +2,7 @@ package com.example.rohan.qhw4;
 
 import android.app.ActionBar;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -10,8 +11,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,7 +40,7 @@ public class MediaListActivity extends AppCompatActivity {
     ScrollView scrollViewMediaList;
     ProgressDialog jsonLoad;
     ArrayList<Product> productsList = new ArrayList<>();
-
+    Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +50,29 @@ public class MediaListActivity extends AppCompatActivity {
         scrollViewMediaList = (ScrollView)findViewById(R.id.scrollViewMediaList);
 
         jsonLoad = new ProgressDialog(MediaListActivity.this);
+        button = (Button)findViewById(R.id.button);
         //Checking the intent
         if(checkIntent()){
             String name = getIntent().getExtras().getString("URL");
             Log.d("Demo", "URL: "+name);
             new GetAudioBooks().execute(name);
         }
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MediaListActivity.this,DetailedMediaActivity.class);
+                i.putExtra("appName",productsList.get(0).getTitleLabel());
+                i.putExtra("dateReleased",productsList.get(0).getReleaseDateLabel());
+                i.putExtra("imageLarge",productsList.get(0).getLargeImage());
+                i.putExtra("artist",productsList.get(0).getArtistLabel());
+                i.putExtra("price",productsList.get(0).getPrice());
+                i.putExtra("currency",productsList.get(0).getCurrency());
+                i.putExtra("category",productsList.get(0).getCategoryLabel());
+                i.putExtra("link",productsList.get(0).getLinkUrl());
+                startActivity(i);
+            }
+        });
     }
 
     class GetAudioBooks extends AsyncTask<String, Void, ArrayList<Product>>{
@@ -73,6 +93,7 @@ public class MediaListActivity extends AppCompatActivity {
                 Log.d("Demo", "Not yet");
             }else {
 //                generateViews(products);
+                productsList = products;
                 for (Product s : products) {
                     Log.d("Demo", s.toString());
                 }
@@ -156,7 +177,8 @@ public class MediaListActivity extends AppCompatActivity {
         }
     }
     //Generate Views
-    private void generateViews(ArrayList<Product> productsLists){
+    private void generateViews(final ArrayList<Product> productsLists){
+
 
 
 

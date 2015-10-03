@@ -15,5 +15,9 @@
     <string name="pod_cast">Pod Cast</string>
     <string name="tv_shows">TV Shows</string>
     <string name="title_activity_media_list">MediaListActivity</string>
+    <string name="title_activity_detailed_media">DetailedMediaActivity</string>
+    //DetailedView
+    <string name="empty"></string>
+    <string name="app_link">App Link in Store</string>
 
 </resources>
