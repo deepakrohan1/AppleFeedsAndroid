@@ -12,7 +12,7 @@ public class Product {
     String titleLabel, smallImage, largeImage,currency,artistLabel, linkUrl, categoryLabel, releaseDateLabel;
     double price;
 
-    public Product(String titleLabel, String smallImage, String largeImage, String currency, String artistLabel, String linkUrl, String categoryLabel, String releaseDateLabel, double price) {
+   /* public Product(String titleLabel, String smallImage, String largeImage, String currency, String artistLabel, String linkUrl, String categoryLabel, String releaseDateLabel, double price) {
         this.titleLabel = titleLabel;
         this.smallImage = smallImage;
         this.largeImage = largeImage;
@@ -22,7 +22,7 @@ public class Product {
         this.categoryLabel = categoryLabel;
         this.releaseDateLabel = releaseDateLabel;
         this.price = price;
-    }
+    }*/
 
     //Getters
 
@@ -63,6 +63,41 @@ public class Product {
         return price;
     }
 
+    public void setTitleLabel(String titleLabel) {
+        this.titleLabel = titleLabel;
+    }
+
+    public void setSmallImage(String smallImage) {
+        this.smallImage = smallImage;
+    }
+
+    public void setLargeImage(String largeImage) {
+        this.largeImage = largeImage;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public void setArtistLabel(String artistLabel) {
+        this.artistLabel = artistLabel;
+    }
+
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl;
+    }
+
+    public void setCategoryLabel(String categoryLabel) {
+        this.categoryLabel = categoryLabel;
+    }
+
+    public void setReleaseDateLabel(String releaseDateLabel) {
+        this.releaseDateLabel = releaseDateLabel;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
     @Override
     public String toString() {

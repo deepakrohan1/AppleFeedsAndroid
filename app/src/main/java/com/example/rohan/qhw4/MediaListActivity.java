@@ -11,8 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -35,6 +38,7 @@ public class MediaListActivity extends AppCompatActivity {
         if(checkIntent()){
             String name = getIntent().getExtras().getString("URL");
             Log.d("URL", name);
+            new GetAudioBooks().execute(name);
         }
 
 
@@ -54,26 +58,41 @@ public class MediaListActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<Product> products) {
             super.onPostExecute(products);
             jsonLoad.dismiss();
-            for(Product s : products) {
-                Log.d("Demo", "After the Parsing Plist" + s.toString());
+            if(products.isEmpty()){
+                Log.d("Demo", "Not yet");
+            }else {
+                for (Product s : products) {
+                    Log.d("Demo", "After the Parsing Plist" + s.toString());
+                }
             }
         }
 
         @Override
         protected ArrayList<Product> doInBackground(String... params) {
             BufferedReader br;
+            StringBuilder sb = null;
             if(isConnected()){
                 try {
                     URL url = new URL(params[0]);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     con.setRequestMethod("GET");
-
+                    br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    String line = "";
+                    sb = new StringBuilder();
+                    while((line = br.readLine())!=null){
+                        sb.append(line);
+                    }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
+                Log.d("Demo", "the content "+sb.toString());
+                try {
+                    return ProductUtil.ProductJSONParser.ProductParser(sb.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
 
@@ -94,7 +113,7 @@ public class MediaListActivity extends AppCompatActivity {
 
 
     private boolean isConnected(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(NETWORK_STATS_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if(networkInfo != null && networkInfo.isConnected()){
             return true;
