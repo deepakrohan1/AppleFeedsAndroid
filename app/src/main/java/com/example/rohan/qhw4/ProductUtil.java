@@ -13,35 +13,68 @@ import java.util.ArrayList;
  */
 public class ProductUtil {
     static public class ProductJSONParser {
-        static ArrayList<Product> ProductParser(String s) throws JSONException {
+        static ArrayList<Product> ProductParser(String s, String mediaType) throws JSONException {
             ArrayList<Product> productsList = new ArrayList<>();
-            Log.d("Demo", "Inside UTIL");
+            Log.d("Demo", "Inside UTIL : " +mediaType);
             JSONObject root = new JSONObject(s).getJSONObject("feed");
             JSONArray entryArray = root.getJSONArray("entry");
+
             for (int i = 0; i < entryArray.length(); i++) {
                 Product product = new Product();
 //                Log.d("Demo", "Inside Entry Array");
+                //Title of App
                 String label = entryArray.getJSONObject(i).getJSONObject("title").getString("label");
                 product.setTitleLabel(label);
+
+                //Price of the App
                 Double imPrice = entryArray.getJSONObject(i).getJSONObject("im:price").getJSONObject("attributes").getDouble("amount");
                 product.setPrice(imPrice);
+
+                //Currency
                 String currency = entryArray.getJSONObject(i).getJSONObject("im:price").getJSONObject("attributes").getString("currency");
                 product.setCurrency(currency);
+
+                //Artist
                 String artist = entryArray.getJSONObject(i).getJSONObject("im:artist").getString("label");
                 product.setArtistLabel(artist);
+
+                //Category
                 String category = entryArray.getJSONObject(i).getJSONObject("category").getJSONObject("attributes").getString("label");
                 product.setCategoryLabel(category);
+
+                //Release Date
                 String releaseDate = entryArray.getJSONObject(i).getJSONObject("im:releaseDate").getJSONObject("attributes").getString("label");
                 product.setReleaseDateLabel(releaseDate);
-                String productLink = "";
-//                JSONArray productLi = entryArray.getJSONArray(i).getJSONArray("link");
-                JSONObject link = entryArray.getJSONObject(i);
-                JSONArray links = link.getJSONArray("link");
-                for (int j = 0; j < links.length() - 1; j++) {
-                    productLink = links.getJSONObject(j).getJSONObject("attributes").getString("href");
-//                    Log.d("Demo",productLink);
-                    product.setLinkUrl(productLink);
+
+                //Summary of App
+                if((mediaType.equals("BOOKS")) || (mediaType.equals("MACAPPS")) ||
+                        (mediaType.equals("TVSHOWS")) || (mediaType.equals("ITUNESU"))
+                        || (mediaType.equals("PODCASTS"))) {
+                    try{
+                        String summary = entryArray.getJSONObject(i).getJSONObject("summary").getString("label");
+                        product.setSummary(summary);
+
+                    }catch (JSONException e){
+                        product.setSummary("Not Found");
+                    }
+
                 }
+                JSONObject link = entryArray.getJSONObject(i);
+                //Parsing the Preview Links
+                if((mediaType.equals("AUDIOBOOKS")) || (mediaType.equals("MOVIES")) ||
+                        (mediaType.equals("TVSHOWS")) || (mediaType.equals("MUSICVIDEO"))) {
+
+                    JSONArray links = link.getJSONArray("link");
+
+                    product.setLinkUrl(links.getJSONObject(0).getJSONObject("attributes").getString("href"));
+                    product.setDuration(links.getJSONObject(1).getJSONObject("im:duration").getString("label"));
+                }
+                else {
+                    String previewLink = entryArray.getJSONObject(i).getJSONObject("link").getJSONObject("attributes").getString("href");
+                    product.setLinkUrl(previewLink);
+                }
+
+                //Image Links
                 String imageSmall = "";
                 String imageLarge = "";
                 JSONArray images = link.getJSONArray("im:image");
@@ -50,11 +83,7 @@ public class ProductUtil {
                     imageLarge = images.getJSONObject(2).getString("label");
                     product.setSmallImage(imageSmall);
                     product.setLargeImage(imageLarge);
-//                    Log.d("Demo", imageSmall + "--" + imageLarge);
                 }
-//                Log.d("Demo",label+"--"+imPrice+"--"+currency+"--"+artist+"--"+category+"--"+releaseDate+"--"+productLink);
-//                Log.d("Demo",imageSmall+"--"+imageLarge);
-//                Log.d("Demo","-----------------------------");
                 productsList.add(product);
 
             }

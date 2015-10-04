@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,9 @@ public class DetailedMediaActivity extends AppCompatActivity {
     TextView textViewPrice;
     TextView textViewCategory;
     TextView textViewAppLink;
+    TextView textViewSummary;
+    Product product = null;
+    String mediaType = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,37 +33,28 @@ public class DetailedMediaActivity extends AppCompatActivity {
         textViewPrice = (TextView)findViewById(R.id.textViewPrice);
         textViewCategory = (TextView)findViewById(R.id.textViewCategory);
         textViewAppLink = (TextView)findViewById(R.id.textViewAppLink);
+        textViewSummary = (TextView)findViewById(R.id.textViewSummary);
 
         if(getIntent().getExtras() != null){
-            textViewTitle.setText(getIntent().getExtras().getString("appName"));
-            textViewReleaseDate.setText(getIntent().getExtras().getString("dateReleased"));
-            textViewBy.setText("By: "+getIntent().getExtras().getString("artist"));
-            textViewPrice.setText("Price: "+getIntent().getExtras().getDouble("price") + " "+getIntent().getExtras().getString("currency"));
-            textViewCategory.setText("Category: "+getIntent().getExtras().getString("category"));
-            textViewAppLink.setText(getIntent().getExtras().getString("link"));
-            Picasso.with(this).load(getIntent().getExtras().getString("imageLarge")).into(imageViewApp);
+            product = (Product)getIntent().getExtras().getSerializable("PRODUCT");
+            mediaType = getIntent().getExtras().getString("MEDIATYPE");
+
+            textViewTitle.setText(product.getTitleLabel());
+            textViewReleaseDate.setText(product.getReleaseDateLabel());
+            textViewBy.setText("By: "+product.getArtistLabel());
+            textViewPrice.setText("Price: "+product.getPrice() + " "+product.getCurrency());
+            textViewCategory.setText("Category: "+product.getCategoryLabel());
+            textViewAppLink.setText(product.getLinkUrl());
+            Picasso.with(this).load(product.getLargeImage()).into(imageViewApp);
+
+            if(mediaType.equals("BOOKS")||mediaType.equals("ITUNESU")||mediaType.equals("MACAPPS")
+                    ||mediaType.equals("PODCAST")||mediaType.equals("TVSHOWS")){
+                textViewSummary.setText("Summary: "+product.getSummary());
+            }else{
+                textViewSummary.setVisibility(View.GONE);
+            }
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_detailed_media, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
