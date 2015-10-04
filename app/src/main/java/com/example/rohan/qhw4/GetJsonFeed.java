@@ -86,6 +86,6 @@ public class GetJsonFeed extends AsyncTask<String, Void, ArrayList<Product>> {
 
 
     public static interface IGetFeeds {
-        public void checkPreferences(ArrayList<Product> products);
+        public ArrayList<Product> checkPreferences(ArrayList<Product> products);
     }
 }

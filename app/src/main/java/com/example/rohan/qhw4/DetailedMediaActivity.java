@@ -57,11 +57,11 @@ public class DetailedMediaActivity extends AppCompatActivity {
             textViewAppLink.setText(product.getLinkUrl());
             Picasso.with(this).load(product.getLargeImage()).into(imageViewApp);
 
-            if(mediaType.equals("BOOKS")||mediaType.equals("ITUNESU")||mediaType.equals("MACAPPS")
-                    ||mediaType.equals("PODCAST")||mediaType.equals("TVSHOWS")){
+            if(mediaType.equals("BOOKS")||mediaType.equals("ITUNES U")||mediaType.equals("MAC APPS")
+                    ||mediaType.equals("PODCASTS")||mediaType.equals("TV SHOWS")){
                 textViewSummary.setText("Summary: "+product.getSummary());
             }
-            if(mediaType.equals("AUDIOBOOKS")){
+            if(mediaType.equals("AUDIO BOOKS")){
                 textViewDuration.setText("Duration: "+product.getDuration());
             }
         }

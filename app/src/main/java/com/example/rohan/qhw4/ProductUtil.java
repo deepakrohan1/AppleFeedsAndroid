@@ -47,8 +47,8 @@ public class ProductUtil {
                 product.setReleaseDateLabel(releaseDate);
 
                 //Summary of App
-                if((mediaType.equals("BOOKS")) || (mediaType.equals("MACAPPS")) ||
-                        (mediaType.equals("TVSHOWS")) || (mediaType.equals("ITUNESU"))
+                if((mediaType.equals("BOOKS")) || (mediaType.equals("MAC APPS")) ||
+                        (mediaType.equals("TV SHOWS")) || (mediaType.equals("ITUNES U"))
                         || (mediaType.equals("PODCASTS"))) {
                     try{
                         String summary = entryArray.getJSONObject(i).getJSONObject("summary").getString("label");
@@ -61,8 +61,8 @@ public class ProductUtil {
                 }
                 JSONObject link = entryArray.getJSONObject(i);
                 //Parsing the Preview Links
-                if((mediaType.equals("AUDIOBOOKS")) || (mediaType.equals("MOVIES")) ||
-                        (mediaType.equals("TVSHOWS")) || (mediaType.equals("MUSICVIDEO"))) {
+                if((mediaType.equals("AUDIO BOOKS")) || (mediaType.equals("MOVIES")) ||
+                        (mediaType.equals("TV SHOWS")) || (mediaType.equals("MUSIC VIDEO"))) {
 
                     JSONArray links = link.getJSONArray("link");
 

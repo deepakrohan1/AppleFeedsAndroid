@@ -54,13 +54,13 @@ public class MainActivity extends AppCompatActivity {
         textViewAudioBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isSharedPref = checkSharedPreference("AUDIOBOOKS");
+//                boolean isSharedPref = checkSharedPreference("AUDIOBOOKS");
 //                startIntent("AUDIOBOOKS","https://itunes.apple.com/us/rss/topaudiobooks/limit=25/json",isSharedPref);
 
                 Intent i = new Intent(MainActivity.this, MediaListActivity.class);
                 i.putExtra(MEDIAURL,"https://itunes.apple.com/us/rss/topaudiobooks/limit=25/json");
-                i.putExtra(MEDIATYPE,"AUDIOBOOKS");
-                i.putExtra(ISPREFERENCE,isSharedPref);
+                i.putExtra(MEDIATYPE,"AUDIO BOOKS");
+//                i.putExtra(ISPREFERENCE,isSharedPref);
                 startActivity(i);
             }
         });
@@ -68,12 +68,12 @@ public class MainActivity extends AppCompatActivity {
         textViewBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isSharedPref = checkSharedPreference("BOOKS");
+//                boolean isSharedPref = checkSharedPreference("BOOKS");
 //                startIntent("BOOKS","https://itunes.apple.com/us/rss/topfreeebooks/limit=25/json",isSharedPref);
                 Intent i = new Intent(MainActivity.this, MediaListActivity.class);
                 i.putExtra(MEDIAURL,"https://itunes.apple.com/us/rss/topfreeebooks/limit=25/json");
                 i.putExtra(MEDIATYPE,"BOOKS");
-                i.putExtra(ISPREFERENCE,isSharedPref);
+//                i.putExtra(ISPREFERENCE,isSharedPref);
                 startActivity(i);
             }
         });
@@ -81,13 +81,13 @@ public class MainActivity extends AppCompatActivity {
         textViewiosApps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isSharedPref = checkSharedPreference("IOSAPPS");
+//                boolean isSharedPref = checkSharedPreference("IOSAPPS");
 //                startIntent("IOSAPPS","https://itunes.apple.com/us/rss/newapplications/limit=25/json",isSharedPref);
 
                 Intent i = new Intent(MainActivity.this, MediaListActivity.class);
                 i.putExtra(MEDIAURL,"https://itunes.apple.com/us/rss/newapplications/limit=25/json");
-                i.putExtra(MEDIATYPE,"IOSAPPS");
-                i.putExtra(ISPREFERENCE,isSharedPref);
+                i.putExtra(MEDIATYPE,"iOS APPS");
+//                i.putExtra(ISPREFERENCE,isSharedPref);
                 startActivity(i);
             }
         });
@@ -95,13 +95,13 @@ public class MainActivity extends AppCompatActivity {
         textViewMacApps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isSharedPref = checkSharedPreference("MACAPPS");
+//                boolean isSharedPref = checkSharedPreference("MACAPPS");
 //                startIntent("MACAPPS","https://itunes.apple.com/us/rss/topfreemacapps/limit=25/json",isSharedPref);
 
                 Intent i = new Intent(MainActivity.this, MediaListActivity.class);
                 i.putExtra(MEDIAURL,"https://itunes.apple.com/us/rss/topfreemacapps/limit=25/json");
-                i.putExtra(MEDIATYPE,"MACAPPS");
-                i.putExtra(ISPREFERENCE,isSharedPref);
+                i.putExtra(MEDIATYPE,"MAC APPS");
+//                i.putExtra(ISPREFERENCE,isSharedPref);
                 startActivity(i);
             }
         });
@@ -109,11 +109,11 @@ public class MainActivity extends AppCompatActivity {
         textViewMovies.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isSharedPref = checkSharedPreference("MOVIES");
+//                boolean isSharedPref = checkSharedPreference("MOVIES");
                 Intent i = new Intent(MainActivity.this, MediaListActivity.class);
                 i.putExtra(MEDIAURL,"https://itunes.apple.com/us/rss/topmovies/limit=25/json");
                 i.putExtra(MEDIATYPE,"MOVIES");
-                i.putExtra(ISPREFERENCE,isSharedPref);
+//                i.putExtra(ISPREFERENCE,isSharedPref);
                 startActivity(i);
             }
         });
@@ -121,11 +121,11 @@ public class MainActivity extends AppCompatActivity {
         textViewItunesU.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isSharedPref = checkSharedPreference("ITUNESU");
+//                boolean isSharedPref = checkSharedPreference("ITUNESU");
                 Intent i = new Intent(MainActivity.this, MediaListActivity.class);
                 i.putExtra(MEDIAURL,"https://itunes.apple.com/us/rss/topitunesucollections/limit=25/json");
-                i.putExtra(MEDIATYPE,"ITUNESU");
-                i.putExtra(ISPREFERENCE,isSharedPref);
+                i.putExtra(MEDIATYPE,"ITUNES U");
+//                i.putExtra(ISPREFERENCE,isSharedPref);
                 startActivity(i);
             }
         });
@@ -133,11 +133,11 @@ public class MainActivity extends AppCompatActivity {
         textViewMusicVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isSharedPref = checkSharedPreference("PODCASTS");
+//                boolean isSharedPref = checkSharedPreference("PODCASTS");
                 Intent i = new Intent(MainActivity.this, MediaListActivity.class);
                 i.putExtra(MEDIAURL,"https://itunes.apple.com/us/rss/topmusicvideos/limit=25/json");
-                i.putExtra(MEDIATYPE,"MUSICVIDEO");
-                i.putExtra(ISPREFERENCE,isSharedPref);
+                i.putExtra(MEDIATYPE,"MUSIC VIDEO");
+//                i.putExtra(ISPREFERENCE,isSharedPref);
                 startActivity(i);
             }
         });
@@ -147,11 +147,11 @@ public class MainActivity extends AppCompatActivity {
         textViewPodCast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isSharedPref = checkSharedPreference("PODCASTS");
+//                boolean isSharedPref = checkSharedPreference("PODCASTS");
                 Intent i = new Intent(MainActivity.this, MediaListActivity.class);
                 i.putExtra(MEDIAURL,"https://itunes.apple.com/us/rss/toppodcasts/limit=25/json");
                 i.putExtra(MEDIATYPE,"PODCASTS");
-                i.putExtra(ISPREFERENCE,isSharedPref);
+//                i.putExtra(ISPREFERENCE,isSharedPref);
                 startActivity(i);
             }
         });
@@ -159,11 +159,11 @@ public class MainActivity extends AppCompatActivity {
         LargeTextTvShows.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isSharedPref = checkSharedPreference("TVSHOWS");
+//                boolean isSharedPref = checkSharedPreference("TVSHOWS");
                 Intent i = new Intent(MainActivity.this, MediaListActivity.class);
                 i.putExtra(MEDIAURL,"https://itunes.apple.com/us/rss/toptvepisodes/limit=25/json");
-                i.putExtra(MEDIATYPE,"TVSHOWS");
-                i.putExtra(ISPREFERENCE,isSharedPref);
+                i.putExtra(MEDIATYPE,"TV SHOWS");
+//                i.putExtra(ISPREFERENCE,isSharedPref);
                 startActivity(i);
             }
         });
@@ -191,32 +191,32 @@ public class MainActivity extends AppCompatActivity {
         LargeTextTvShows = (TextView)findViewById(R.id.LargeTextTvShows);
     }
 
-    public boolean checkSharedPreference(String amediaType){
-
-        boolean lcheck = fshareMedia.contains(MEDIATYPE);
-        if(lcheck) {
-            String lcheckMedia = fshareMedia.getString(MEDIATYPE,null);
-            if(lcheckMedia!=null && lcheckMedia.equals(amediaType)){
-                return true;
-            }
-            else return false;
-        } else {
-            putSharedPreference(amediaType);
-            return false;
-        }
-    }
-
-    public void putSharedPreference(String amediaType){
-        fshareMedia.edit().putString(MEDIATYPE,amediaType).apply();
-
-        Timer ltimer = new Timer();
-        ltimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                fshareMedia.edit().clear().apply();
-            }
-        },2*60*1000);
-    }
+//    public boolean checkSharedPreference(String amediaType){
+//
+//        boolean lcheck = fshareMedia.contains(MEDIATYPE);
+//        if(lcheck) {
+//            String lcheckMedia = fshareMedia.getString(MEDIATYPE,null);
+//            if(lcheckMedia!=null && lcheckMedia.equals(amediaType)){
+//                return true;
+//            }
+//            else return false;
+//        } else {
+//            putSharedPreference(amediaType);
+//            return false;
+//        }
+//    }
+//
+//    public void putSharedPreference(String amediaType){
+//        fshareMedia.edit().putString(MEDIATYPE,amediaType).apply();
+//
+//        Timer ltimer = new Timer();
+//        ltimer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                fshareMedia.edit().clear().apply();
+//            }
+//        },2*60*1000);
+//    }
 
 
 }
