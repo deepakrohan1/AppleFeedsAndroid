@@ -20,6 +20,7 @@ public class DetailedMediaActivity extends AppCompatActivity {
     TextView textViewCategory;
     TextView textViewAppLink;
     TextView textViewSummary;
+    TextView textViewDuration;
     Product product = null;
     String mediaType = "";
     @Override
@@ -34,10 +35,11 @@ public class DetailedMediaActivity extends AppCompatActivity {
         textViewCategory = (TextView)findViewById(R.id.textViewCategory);
         textViewAppLink = (TextView)findViewById(R.id.textViewAppLink);
         textViewSummary = (TextView)findViewById(R.id.textViewSummary);
+        textViewDuration = (TextView)findViewById(R.id.textViewDuration);
 
         if(getIntent().getExtras() != null){
-            product = (Product)getIntent().getExtras().getSerializable("PRODUCT");
-            mediaType = getIntent().getExtras().getString("MEDIATYPE");
+            product = (Product)getIntent().getExtras().getSerializable(MediaListActivity.MEDIAPRODUCTS);
+            mediaType = getIntent().getExtras().getString(MediaListActivity.MEDIATYPE);
 
             textViewTitle.setText(product.getTitleLabel());
             textViewReleaseDate.setText(product.getReleaseDateLabel());
@@ -50,8 +52,9 @@ public class DetailedMediaActivity extends AppCompatActivity {
             if(mediaType.equals("BOOKS")||mediaType.equals("ITUNESU")||mediaType.equals("MACAPPS")
                     ||mediaType.equals("PODCAST")||mediaType.equals("TVSHOWS")){
                 textViewSummary.setText("Summary: "+product.getSummary());
-            }else{
-                textViewSummary.setVisibility(View.GONE);
+            }
+            if(mediaType.equals("AUDIOBOOKS")){
+                textViewDuration.setText("Duration: "+product.getDuration());
             }
         }
     }

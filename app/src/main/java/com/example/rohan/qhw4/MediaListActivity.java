@@ -1,43 +1,24 @@
 package com.example.rohan.qhw4;
 
-import android.app.ActionBar;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -46,10 +27,10 @@ import java.util.TimerTask;
 
 public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.IGetFeeds {
     LinearLayout fMainLayout;
-    String fSelectedMediaType, fMediaTypeUrl;
-    final static String fMEDIA_TYPE = "Media_Type";
-    final static String fMEDIA_FEEDS = "Media_Feeds";
-    final String fMEDIA_PREFERENCE = "Media Preference";
+    String mediaTypeSelected, mediaTypeUrl;
+    final static String MEDIATYPE = "Media_Type";
+    final static String MEDIAPRODUCTS = "Media_Products";
+    final String MEDIAPREFERENCE = "Media Preference";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +39,15 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
         fMainLayout = (LinearLayout) findViewById(R.id.insideScrollLinear);
         //Checking the intent
         if (checkIntent()) {
-            fMediaTypeUrl = getIntent().getExtras().getString(MainActivity.fMEDIA_URL);
-            fSelectedMediaType = getIntent().getExtras().getString(MainActivity.fMEDIA_TYPE);
-            boolean lcheckPreference = getIntent().getExtras().getBoolean(MainActivity.fCHECK_PREFERENCE);
-            Log.d("Demo", "URL: " + fMediaTypeUrl + "--" + fSelectedMediaType + "--" + lcheckPreference);
+            mediaTypeUrl = getIntent().getExtras().getString(MainActivity.MEDIAURL);
+            mediaTypeSelected = getIntent().getExtras().getString(MainActivity.MEDIATYPE);
+            boolean lcheckPreference = getIntent().getExtras().getBoolean(MainActivity.ISPREFERENCE);
+            Log.d("Demo", "URL: " + mediaTypeUrl + "--" + mediaTypeSelected + "--" + lcheckPreference);
 
-            this.setTitle(fMediaTypeUrl);
+            this.setTitle(mediaTypeUrl);
             if (lcheckPreference) {
-                SharedPreferences lshareMedia = getSharedPreferences(fMEDIA_PREFERENCE, MODE_PRIVATE);
-                String lcheckFeeds = lshareMedia.getString(fMEDIA_FEEDS, null);
+                SharedPreferences lshareMedia = getSharedPreferences(MEDIAPREFERENCE, MODE_PRIVATE);
+                String lcheckFeeds = lshareMedia.getString(MEDIAPRODUCTS, null);
                 Gson lgson1 = new Gson();
                 Type type = new TypeToken<List<Product>>() {
                 }.getType();
@@ -75,10 +56,9 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
 //                    Log.d("Demo", "Stored" + p.toString());
                 }
                 generateViews(products);
-//                displayFeeds(lfeeds);
             } else {
 
-                new GetJsonFeed(this, fSelectedMediaType).execute(fMediaTypeUrl);
+                new GetJsonFeed(this, mediaTypeSelected).execute(mediaTypeUrl);
             }
         }
 
@@ -91,17 +71,17 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
 //            Log.d("Demo", p.toString());
 //        }
 
-        final SharedPreferences lshareMedia = getSharedPreferences(fMEDIA_PREFERENCE, MODE_PRIVATE);
+        final SharedPreferences lshareMedia = getSharedPreferences(MEDIAPREFERENCE, MODE_PRIVATE);
 
-        String lcheckMedia = lshareMedia.getString(fMEDIA_TYPE, null);
+        String lcheckMedia = lshareMedia.getString(MEDIATYPE, null);
         Gson lgson = new Gson();
         Type ltype = new TypeToken<List<Product>>() {
         }.getType();
         String lstringObjects = lgson.toJson(products, ltype);
 
-        if (lcheckMedia == null || !lcheckMedia.equals(fSelectedMediaType)) {
+        if (lcheckMedia == null || !lcheckMedia.equals(mediaTypeSelected)) {
 
-            lshareMedia.edit().putString(fMEDIA_TYPE,fSelectedMediaType).apply();
+            lshareMedia.edit().putString(MEDIATYPE, mediaTypeSelected).apply();
 
             Timer ltimer = new Timer();
             ltimer.schedule(new TimerTask() {
@@ -111,7 +91,7 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
                 }
             }, 2 * 60 * 1000);
         }
-        lshareMedia.edit().putString(fMEDIA_FEEDS, lstringObjects).apply();
+        lshareMedia.edit().putString(MEDIAPRODUCTS, lstringObjects).apply();
         generateViews(products);
 
 
@@ -157,11 +137,11 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
                 textViewName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent intentDetailed = new Intent(MediaListActivity.this, DetailedMediaActivity.class);
-//                        intentDetailed.putExtra("MEDIATYPE", mediaType);
-//                        intentDetailed.putExtra("PRODUCT", product);
-//                        startActivity(intentDetailed);
-//                        startDetailedActivity(fSelectedMediaType, feed);
+                        Intent intentDetailed = new Intent(MediaListActivity.this, DetailedMediaActivity.class);
+                        intentDetailed.putExtra(MEDIATYPE, mediaTypeSelected);
+                        intentDetailed.putExtra(MEDIAPRODUCTS, product);
+                        startActivity(intentDetailed);
+//                        startDetailedActivity(mediaTypeSelected, feed);
                     }
                 });
 
