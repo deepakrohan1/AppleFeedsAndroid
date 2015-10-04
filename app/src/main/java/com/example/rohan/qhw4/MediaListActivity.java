@@ -37,6 +37,7 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
     int count = 0;
     int id = 0;
     int flag = 0;
+    boolean lcheckPreference = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,7 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
         if (checkIntent()) {
             mediaTypeUrl = getIntent().getExtras().getString(MainActivity.MEDIAURL);
             mediaTypeSelected = getIntent().getExtras().getString(MainActivity.MEDIATYPE);
-            boolean lcheckPreference = getIntent().getExtras().getBoolean(MainActivity.ISPREFERENCE);
+            lcheckPreference = getIntent().getExtras().getBoolean(MainActivity.ISPREFERENCE);
             Log.d("Demo", "URL: " + mediaTypeUrl + "--" + mediaTypeSelected + "--" + lcheckPreference);
 
             this.setTitle(mediaTypeSelected);
@@ -110,8 +111,10 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
 
 
     //Generate Views
-    private void generateViews(ArrayList<Product> productsLists) {
-
+    private void generateViews(final ArrayList<Product> productsLists) {
+if(fMainLayout.getChildCount() > 0){
+    fMainLayout.removeAllViews();
+}
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete Entry")
@@ -121,7 +124,11 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
                     public void onClick(DialogInterface dialog, int which) {
 //                        new DeleteAll().execute("http://dev.theappsdr.com/apis/trivia_fall15/deleteAll.php");
                         int flag = 1;
-                        Log.d("Demo","check the ID"+id);
+                        Log.d("Demo", "check the ID" + id);
+                        if (flag == 1 && lcheckPreference == true) {
+                            productsLists.remove(id);
+                            generateViews(productsLists);
+                        }
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
