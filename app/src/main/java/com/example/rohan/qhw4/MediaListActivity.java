@@ -1,5 +1,7 @@
 package com.example.rohan.qhw4;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -31,6 +33,9 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
     final static String MEDIATYPE = "Media_Type";
     final static String MEDIAPRODUCTS = "Media_Products";
     final String MEDIAPREFERENCE = "Media Preference";
+    int count = 0;
+    int id = 0;
+    int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +105,29 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
 
     //Generate Views
     private void generateViews(ArrayList<Product> productsLists) {
+
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete Entry")
+                .setMessage("Are you sure you want to delete the \nentry?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                        new DeleteAll().execute("http://dev.theappsdr.com/apis/trivia_fall15/deleteAll.php");
+                        int flag = 1;
+                        Log.d("Demo","check the ID"+id);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
         if (productsLists != null) {
+            count = 0;
+            id = 0;
             for (final Product product : productsLists) {
                 //Setting up master horizontal linear layout
                 LinearLayout linearLayoutList = new LinearLayout(MediaListActivity.this);
@@ -121,7 +148,7 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
                 Picasso.with(MediaListActivity.this).load(product.getLargeImage()).resize(150, 150).into(lImageViewAppIcon);
 
                 //Setting up the text view and its layout params
-                TextView textViewName = new TextView(MediaListActivity.this);
+                final TextView textViewName = new TextView(MediaListActivity.this);
                 LinearLayout.LayoutParams lTextViewLayoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
@@ -134,6 +161,8 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
                 textViewName.setTextColor(Color.BLACK);
                 textViewName.setClickable(true);
                 textViewName.setText(product.getTitleLabel());
+                textViewName.setId(count);
+
                 textViewName.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -145,10 +174,23 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
                     }
                 });
 
+                textViewName.setOnLongClickListener(new View.OnLongClickListener(){
+
+                    @Override
+                    public boolean onLongClick(View v) {
+                        id = textViewName.getId();
+                        Log.d("Demo","Pressed Key: "+id);
+                        builder.create().show();
+                        return false;
+
+                    }
+                });
+
                 //Adding text view and image view into the master layout
                 linearLayoutList.addView(lImageViewAppIcon);
                 linearLayoutList.addView(textViewName);
                 fMainLayout.addView(linearLayoutList);
+                count ++;
             }
         } else {
             Log.d("Demo", "No data Received");

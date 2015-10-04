@@ -27,6 +27,10 @@
             android:name=".DetailedMediaActivity"
             android:label="@string/title_activity_detailed_media" >
         </activity>
+        <activity
+            android:name=".PreviewActivity"
+            android:label="@string/title_activity_preview" >
+        </activity>
     </application>
 
 </manifest>

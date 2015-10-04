@@ -1,5 +1,6 @@
 package com.example.rohan.qhw4;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,6 +24,7 @@ public class DetailedMediaActivity extends AppCompatActivity {
     TextView textViewDuration;
     Product product = null;
     String mediaType = "";
+    final static String URL="URL";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +59,15 @@ public class DetailedMediaActivity extends AppCompatActivity {
                 textViewDuration.setText("Duration: "+product.getDuration());
             }
         }
+
+        textViewAppLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(DetailedMediaActivity.this,PreviewActivity.class);
+                i.putExtra(URL,product.getLinkUrl());
+                startActivity(i);
+            }
+        });
     }
 
 
