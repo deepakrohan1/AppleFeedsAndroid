@@ -2,6 +2,7 @@ package com.example.rohan.qhw4;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -43,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
         fmediaEditor.clear();
         fmediaEditor.commit();
 
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.media_icon);
+        actionBar.setTitle("App Store Latest...");
 
         //OnClicks
         textViewAudioBooks.setOnClickListener(new View.OnClickListener() {

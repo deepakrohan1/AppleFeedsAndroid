@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +42,11 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media_list);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.media_icon);
+
         fMainLayout = (LinearLayout) findViewById(R.id.insideScrollLinear);
         //Checking the intent
         if (checkIntent()) {
@@ -49,7 +55,7 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
             boolean lcheckPreference = getIntent().getExtras().getBoolean(MainActivity.ISPREFERENCE);
             Log.d("Demo", "URL: " + mediaTypeUrl + "--" + mediaTypeSelected + "--" + lcheckPreference);
 
-            this.setTitle(mediaTypeUrl);
+            this.setTitle(mediaTypeSelected);
             if (lcheckPreference) {
                 SharedPreferences lshareMedia = getSharedPreferences(MEDIAPREFERENCE, MODE_PRIVATE);
                 String lcheckFeeds = lshareMedia.getString(MEDIAPRODUCTS, null);

@@ -1,6 +1,7 @@
 package com.example.rohan.qhw4;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,6 +30,11 @@ public class DetailedMediaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_media);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.mipmap.media_icon);
+
         textViewTitle = (TextView)findViewById(R.id.textViewTitle);
         imageViewApp = (ImageView)findViewById(R.id.imageViewApp);
         textViewReleaseDate = (TextView)findViewById(R.id.textViewReleaseDate);
