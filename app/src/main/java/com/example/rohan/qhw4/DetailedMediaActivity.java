@@ -55,6 +55,7 @@ public class DetailedMediaActivity extends AppCompatActivity {
             textViewPrice.setText("Price: "+product.getPrice() + " "+product.getCurrency());
             textViewCategory.setText("Category: "+product.getCategoryLabel());
             textViewAppLink.setText(product.getLinkUrl());
+            //Loading Image through Picasso
             Picasso.with(this).load(product.getLargeImage()).into(imageViewApp);
 
             if(mediaType.equals("BOOKS")||mediaType.equals("ITUNES U")||mediaType.equals("MAC APPS")

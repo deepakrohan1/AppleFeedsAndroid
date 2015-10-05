@@ -1,6 +1,7 @@
 package com.example.rohan.qhw4;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,7 +37,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
-public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.IGetFeeds {
+public class MediaListActivity extends AppCompatActivity {
     LinearLayout fMainLayout;
     String mediaTypeSelected, mediaTypeUrl;
     final static String MEDIATYPE = "Media_Type";
@@ -44,6 +45,7 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
     ArrayList<Product> productsList;
     SharedPreferences preferences;
     AlertDialog.Builder builder;
+    ProgressDialog jsonLoad;
 
     static final String iTUNESJSON = "iTunesJSON";
     static final String JSONVal = "JSONVal";
@@ -72,7 +74,7 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
                         Log.d("Demo", productsList.get(id).toString());
                         for (Product p : productsList) {
                         }
-                        savetoSharedPreferences(productsList, getSharedPreferences(JSONVal + mediaTypeSelected, 0));
+                        toSharedPreference(productsList, getSharedPreferences(JSONVal + mediaTypeSelected, 0));
                         generateViews(productsList);
                     }
                 })
@@ -101,11 +103,17 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            jsonLoad = new ProgressDialog(MediaListActivity.this);
+            jsonLoad.show();
+            jsonLoad.setMessage("Loading...");
+            jsonLoad.setTitle("Getting the Content");
+            jsonLoad.setCancelable(false);
         }
 
         @Override
         protected void onPostExecute(ArrayList<Product> products) {
             super.onPostExecute(products);
+            jsonLoad.dismiss();
             if (products != null) {
                 productsList = (ArrayList<Product>) products.clone();
                 generateViews(products);
@@ -144,7 +152,7 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
                     }
 
                     products = ProductUtil.ProductJSONParser.ProductParser(jsonString, mediaTypeSelected);
-                    savetoSharedPreferences(products, preferences);
+                    toSharedPreference(products, preferences);
                 } else
 
                 {
@@ -168,15 +176,6 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
             return null;
         }
     }
-
-
-    @Override
-    public void checkPreferences(ArrayList<Product> products) {
-        savetoSharedPreferences(products, preferences);
-        productsList = (ArrayList<Product>) products.clone();
-        generateViews(products);
-    }
-
 
     //Generate Views
     private void generateViews(ArrayList<Product> productsLists) {
@@ -266,7 +265,7 @@ public class MediaListActivity extends AppCompatActivity implements GetJsonFeed.
         }
     }
 
-    private void savetoSharedPreferences(ArrayList<Product> products, SharedPreferences preferences) {
+    private void toSharedPreference(ArrayList<Product> products, SharedPreferences preferences) {
         Gson gson = new Gson();
         Time currentTime = new Time();
         currentTime.setToNow();

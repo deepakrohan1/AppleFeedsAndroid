@@ -21,4 +21,7 @@
     <string name="app_link">App Link in Store</string>
     <string name="title_activity_preview">PreviewActivity</string>
 
+    //Title
+    <string name="app_title">App Store Latest</string>
+
 </resources>
