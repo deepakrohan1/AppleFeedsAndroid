@@ -134,7 +134,6 @@ public class MediaListActivity extends AppCompatActivity {
                     URL url = new URL(params[0]);
                     HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                     httpURLConnection.setRequestMethod("GET");
-                    httpURLConnection.connect();
                     int responseCode = httpURLConnection.getResponseCode();
                     if (responseCode == HttpURLConnection.HTTP_OK) {
                         BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
@@ -148,13 +147,10 @@ public class MediaListActivity extends AppCompatActivity {
                         // putting value in shared preferences
                         currentTime = new Time();
                         currentTime.setToNow();
-
                     }
-
                     products = ProductUtil.ProductJSONParser.ProductParser(jsonString, mediaTypeSelected);
                     toSharedPreference(products, preferences);
                 } else
-
                 {
                     Gson gson = new Gson();
                     Type t = new TypeToken<ArrayList<Product>>() {
